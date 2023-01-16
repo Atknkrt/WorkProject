@@ -16,14 +16,14 @@ namespace WorkProject.Controllers
 {
     public class UserController : Controller
     {
-        IFirebaseConfig config = new FirebaseConfig
+        IFirebaseConfig config = new FirebaseConfig//Veri Tabanı ile Bağlantı Kurulumu
         {
             AuthSecret = "okwVA8jjLspZ0GltWufFbgbSBT5HI1pOjhY4sCg3",
             BasePath = "https://workproject-fe31e-default-rtdb.firebaseio.com/"
         };
         FirebaseClient client;
         // GET: User
-        public ActionResult Index()
+        public ActionResult Index()//User List oluşmu
         {
             client = new FireSharp.FirebaseClient(config);
             FirebaseResponse response = client.Get("Users");
@@ -45,7 +45,7 @@ namespace WorkProject.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Create(User user)
+        public ActionResult Create(User user)//User Ekleme İşlemi
         {
 
 
@@ -60,7 +60,7 @@ namespace WorkProject.Controllers
             return View();
         }
 
-        private void AddUserToFireBase(User user)
+        private void AddUserToFireBase(User user)//User Ekleme Metodu
         {
             client= new FireSharp.FirebaseClient(config);
             var data = user;
@@ -69,7 +69,7 @@ namespace WorkProject.Controllers
             SetResponse setResponse = client.Set("Users/" + data.UserID, data);
         }
         [HttpGet]
-        public ActionResult Detail(string id)
+        public ActionResult Detail(string id)//User Detay Bilgileri Ekranı Oluşumu
         {
             client = new FireSharp.FirebaseClient(config);
             FirebaseResponse response = client.Get("Users/" + id);
@@ -86,7 +86,7 @@ namespace WorkProject.Controllers
             return View(data);
         }
         [HttpPost]
-        public ActionResult Edit(User user)
+        public ActionResult Edit(User user)//User Güncelleme İşlemi
         {
             if (ModelState.IsValid)
             {
@@ -101,7 +101,7 @@ namespace WorkProject.Controllers
            
         }
         [HttpGet]
-        public ActionResult Delete(string id)
+        public ActionResult Delete(string id)//User Silme İşlemi
         {
             client = new FireSharp.FirebaseClient(config);
             FirebaseResponse response = client.Delete("Users/" + id);
